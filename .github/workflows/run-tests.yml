@@ -1,0 +1,40 @@
+name: Run Tests on Master Branch
+
+on:
+  push:
+    branches:
+      - master
+  workflow_dispatch:
+
+jobs:
+  run-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Start application
+        run: npm run dev &
+      
+      - name: Wait for application to be ready
+        run: npx wait-on http://localhost:8080
+
+      - name: Install Playwright browsers
+        run: npx playwright install --with-deps
+
+      - name: Run tests
+        run: npm run test:e2e
+
+      - name: Upload Playwright test report
+        uses: actions/upload-artifact@v3
+        with:
+          name: playwright-test-report
+          path: playwright-report
