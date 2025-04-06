@@ -1,29 +1,29 @@
-import { test, expect } from '@playwright/test'
-import { existingUsers } from '../../test-setup/localstorage.setup'
+import { expect, test } from '../fixtures';
+import { existingUsers } from '../test-data/users.ts';
 
-test.describe.configure({ mode: 'serial' })
+test.describe('Login Tests', () => {
+  for (const user of existingUsers) {
+    test(`Log in as "${user.email}" and verify that "LOG OUT" button is displayed`, async ({
+      loginPage,
+      homePage,
+    }) => {
+      await test.step('Navigate to the login page and verify "Login" heading is displayed', async () => {
+        await loginPage.navigate();
 
-test.describe('login form tests', () => {
-  test('logging in works with existing account', async ({ page }) => {
-    await page.goto('localhost:8080/login')
+        await expect(loginPage.getLoginHeading()).toBeVisible();
+      });
 
-    const existingUser = existingUsers[0]
+      await test.step('Fill in the login form', async () => {
+        await loginPage.fillEmail(user.email);
+        await loginPage.fillPassword(user.password);
+      });
 
-    await page
-      .locator('#root form div:nth-child(1) > div > input')
-      .pressSequentially(existingUser.email)
+      await test.step('Submit the login form and verify "LOG OUT" button is displayed', async () => {
+        await loginPage.submit();
 
-    await page
-      .locator('#root form div:nth-child(2) > div > input')
-      .pressSequentially(existingUser.password)
-
-    // Submit button
-    const button = page.locator('form .MuiButton-sizeMedium')
-    // Click on the button
-    button.click()
-
-    // Wait for 1 second until page is fully loaded
-    await page.waitForTimeout(1000)
-    await expect(page.getByText('Log out')).toBeVisible()
-  })
-})
+        expect(homePage.getWelcomeText()).toHaveText(`Welcome ${user.firstName} ${user.lastName}`);
+        expect(homePage.getLogoutButton()).toBeVisible();
+      });
+    });
+  }
+});
