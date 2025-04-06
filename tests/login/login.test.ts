@@ -21,7 +21,9 @@ test.describe('Login Tests', () => {
       await test.step('Submit the login form and verify "LOG OUT" button is displayed', async () => {
         await loginPage.submit();
 
-        expect(homePage.getWelcomeText()).toHaveText(`Welcome ${user.firstName} ${user.lastName}`);
+        expect(homePage.getWelcomeText()).toHaveText(
+          `Welcome ${user.firstName} ${user.lastName}`,
+        );
         expect(homePage.getLogoutButton()).toBeVisible();
       });
     });

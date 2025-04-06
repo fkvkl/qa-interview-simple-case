@@ -32,7 +32,9 @@ test.describe('Signup tests', () => {
     await test.step(`Submit the form and verify "Welcome ${newUser.firstName} ${newUser.lastName}" text is displayed`, async () => {
       await signupPage.submitForm();
 
-      expect(homePage.getWelcomeText()).toHaveText(`Welcome ${newUser.firstName} ${newUser.lastName}`);
+      expect(homePage.getWelcomeText()).toHaveText(
+        `Welcome ${newUser.firstName} ${newUser.lastName}`,
+      );
       expect(homePage.getLogoutButton()).toBeVisible();
     });
   });
