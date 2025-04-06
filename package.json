@@ -38,6 +38,7 @@
     "eslint-plugin-prettier": "^5.2.6",
     "eslint-plugin-react": "^7.34.2",
     "eslint-plugin-react-hooks": "^4.6.2",
+    "husky": "^9.1.7",
     "playwright": "^1.51.1",
     "prettier": "^3.3.0",
     "typescript": "^5.4.5",
