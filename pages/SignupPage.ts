@@ -1,17 +1,17 @@
 import { Locator, Page } from '@playwright/test';
-import { User } from '../tests/test-data/users';
+import { BasePage } from 'pages/BasePage';
+import { User } from 'test-data/users';
 
-export class SignupPage {
-  private page: Page;
-  private becomeAMemberHeading: Locator;
-  private firstNameInput: Locator;
-  private lastNameInput: Locator;
-  private emailInput: Locator;
-  private passwordInput: Locator;
-  private submitButton: Locator;
+export class SignupPage extends BasePage {
+  private readonly becomeAMemberHeading: Locator;
+  private readonly firstNameInput: Locator;
+  private readonly lastNameInput: Locator;
+  private readonly emailInput: Locator;
+  private readonly passwordInput: Locator;
+  private readonly submitButton: Locator;
 
   constructor(page: Page) {
-    this.page = page;
+    super(page);
     this.becomeAMemberHeading = page.getByRole('heading', {
       name: 'Become a member',
     });
@@ -20,14 +20,6 @@ export class SignupPage {
     this.emailInput = page.getByRole('textbox', { name: 'Email' });
     this.passwordInput = page.getByRole('textbox', { name: 'Password' });
     this.submitButton = page.getByRole('button', { name: 'Submit' });
-  }
-
-  /**
-   * Navigates to the signup page.
-   * @throws Will throw an error if navigation fails.
-   */
-  async navigateTo(): Promise<void> {
-    await this.page.goto('/signup');
   }
 
   /**

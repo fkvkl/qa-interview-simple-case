@@ -13,8 +13,8 @@ export default defineConfig({
   //Run tests in parallel
   fullyParallel: true,
   workers: 4,
-  //Retries for failed tests
-  retries: 1,
+  // Retry on CI only.
+  retries: process.env.CI ? 1 : 0,
   //Report test results
   reporter: [['html', { open: 'on-failure' }]],
   use: {
@@ -31,7 +31,6 @@ export default defineConfig({
     },
     {
       name: 'chromium',
-      testDir: './tests/',
       use: {
         ...devices['Desktop Chrome'],
         // Use "database" with existing accounts

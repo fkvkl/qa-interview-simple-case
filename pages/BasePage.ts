@@ -1,7 +1,7 @@
 import { Page } from '@playwright/test';
 
-export class BasePage {
-  constructor(protected page: Page) {}
+export abstract class BasePage {
+  constructor(protected page: Page) { }
 
   /**
    * Navigates to the specified path.

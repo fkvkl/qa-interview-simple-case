@@ -1,9 +1,9 @@
 import { Locator, Page } from '@playwright/test';
-import { BasePage } from './BasePage';
+import { BasePage } from 'pages/BasePage';
 
 export class HomePage extends BasePage {
-  private logoutButton: Locator;
-  private welcomeText: Locator;
+  private readonly logoutButton: Locator;
+  private readonly welcomeText: Locator;
 
   constructor(page: Page) {
     super(page);

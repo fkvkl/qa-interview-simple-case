@@ -1,12 +1,12 @@
 import { Locator, Page } from '@playwright/test';
-import { BasePage } from './BasePage';
+import { BasePage } from 'pages/BasePage';
 
 export class LoginPage extends BasePage {
-  private loginHeading: Locator;
-  private emailInput: Locator;
-  private passwordInput: Locator;
-  private submitButton: Locator;
-  private signupLink: Locator;
+  private readonly loginHeading: Locator;
+  private readonly emailInput: Locator;
+  private readonly passwordInput: Locator;
+  private readonly submitButton: Locator;
+  private readonly signupLink: Locator;
 
   constructor(page: Page) {
     super(page);
@@ -19,14 +19,9 @@ export class LoginPage extends BasePage {
 
   /**
    * Navigates to the login page.
-   * @throws Will throw an error if navigation fails.
    */
   async navigate(): Promise<void> {
-    try {
-      await this.navigateTo('/login');
-    } catch (error) {
-      throw new Error(`Failed to navigate to login page: ${error}`);
-    }
+    await this.navigateTo('/login');
   }
 
   /**

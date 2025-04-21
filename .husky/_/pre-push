@@ -1,4 +1,0 @@
-cd qa-interview-simple-case-master
-npm run lint
-npm run format
-npm run compile

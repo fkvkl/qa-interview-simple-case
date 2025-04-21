@@ -26,7 +26,7 @@ export const existingUsers: User[] = [
     firstName: 'Test3',
     lastName: 'Testsson3',
   },
-];
+] as const;
 
 export const generateRandomUser = (): User => ({
   email: faker.internet.email(),

@@ -1,9 +1,9 @@
-import { expect, test } from '../fixtures';
-import { existingUsers } from '../test-data/users.ts';
+import { existingUsers } from 'test-data/users';
+import { expect, test } from 'tests/fixtures';
 
 test.describe('Login Tests', () => {
   for (const user of existingUsers) {
-    test(`Log in as "${user.email}" and verify that "LOG OUT" button is displayed`, async ({
+    test(`Log in as "${user.email}" and verify welcome text and "LOG OUT" button is displayed`, async ({
       loginPage,
       homePage,
     }) => {
@@ -18,13 +18,13 @@ test.describe('Login Tests', () => {
         await loginPage.fillPassword(user.password);
       });
 
-      await test.step('Submit the login form and verify "LOG OUT" button is displayed', async () => {
+      await test.step('Submit the login form and verify welcome text and "LOG OUT" button is displayed', async () => {
         await loginPage.submit();
 
-        expect(homePage.getWelcomeText()).toHaveText(
+        await expect(homePage.getWelcomeText()).toHaveText(
           `Welcome ${user.firstName} ${user.lastName}`,
         );
-        expect(homePage.getLogoutButton()).toBeVisible();
+        await expect(homePage.getLogoutButton()).toBeVisible();
       });
     });
   }
